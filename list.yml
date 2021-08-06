@@ -1,0 +1,31 @@
+ncr-action-list: 0.1
+import:
+  log: com.ncr.tx.apitoolkit.actions.common.LogParametersAction
+  copy: com.ncr.tx.apitoolkit.actions.common.CopyAction
+
+lists:
+- list: queryAccounts
+  steps:
+  - action: log
+  - action: copy
+    parameters:
+      set.ext.response.status.code: 200
+      set.ext.response.body#0#.id: 1234
+      set.ext.response.body#0#.type: checking
+      set.ext.response.body#0#.label: My checking account
+      set.ext.response.body#0#.balance: 50000
+      set.ext.response.body#1#.id: 2345
+      set.ext.response.body#1#.type: savings
+      set.ext.response.body#1#.label: My savings account
+      set.ext.response.body#1#.balance: 200000
+  - if: "fields['ext.request.query.customerId'] eq '2'"
+    steps:
+    - action: copy
+      parameters:
+        set.ext.response.body#1#.id: 6666
+  - else: "" 
+    steps:
+    - action: copy
+      parameters:
+        set.ext.response.body#1#.id: 7777      
+ 

@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  version: 1.0-SNAPSHOT-oas3
+  title: lesson 2a
+servers:
+  - url: /v1
+paths:
+  /accounts:
+    get:
+      description: Query for accounts by customerId
+      operationId: accounts/queryAccounts
+      parameters:
+        - in: query
+          name: customerId
+          required: true
+          description: Customer Id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        balance:
+          type: integer
+        id:
+          type: integer
+        label:
+          type: string
+        type:
+          type: string
+          enum:
+            - checking
+            - savings
